@@ -50,22 +50,7 @@ const Search: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center bg-[#222222] text-white min-h-screen w-full">
-      {/* Navbar solo en móviles */}
-      <div className="md:hidden w-full">
-        <Navbar />
-      </div>
-
-      {/* Header solo en pantallas más grandes */}
-      <header className="hidden md:flex w-full max-w-[1512px] h-[87px] items-center justify-between px-[80px] py-[24px] bg-[#222222]">
-      <img src={logo} alt="Logo" className="w-[133px] h-[24px]" />
-      <nav className="flex space-x-6 text-white">
-        <a href="#" className="text-[#D6F379]">Buscar</a>
-        <a href="#" className="transition-colors duration-300 hover:text-[#D6F379]">Mis álbumes</a>
-        <span className="text-white-500">|</span>
-        <a href="#" className="transition-colors duration-300 hover:text-[#D6F379]">Cerrar sesión</a>
-      </nav>
-      </header>
-
+      <Navbar/>
       <main className="flex flex-col items-center text-center px-4 md:px-20 mt-10 w-full">
         <h1 className="font-montserrat font-bold text-4xl sm:text-5xl md:text-[64px] leading-tight max-w-[457px]">
           Busca tus <span className="text-[#D6F379]">artistas</span>
@@ -95,13 +80,13 @@ const Search: React.FC = () => {
         </div>
       </main>
 
-      <section className="w-full max-w-[1240px] mt-12 px-4 md:px-0 relative">
+      <section className="w-full max-w-[1240px] mt-12 px-4 md:px-20 lg:px-[80px] relative">
         {totalResults > 0 && (
           <>
             <p className="text-left">
               Mostrando {results.length} resultados de {totalResults}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4 cursor-pointer">
               {results.map((artist) => (
                 <div
                   key={artist.id}
@@ -158,13 +143,13 @@ const Pagination = ({ page, totalResults, setPage }: { page: number; totalResult
 
   return (
     <div className="flex items-center space-x-2 mt-6 bg-[#222222] p-3 rounded-lg">
-      <button onClick={() => setPage(Math.max(page - 1, 1))} disabled={page === 1} className="px-3 py-2 rounded hover:bg-gray-600 text-white text-[10px]">
+      <button onClick={() => setPage(Math.max(page - 1, 1))} disabled={page === 1} className="px-3 py-2 rounded hover:bg-[#484848] text-white text-[10px] cursor-pointer">
         <FaChevronLeft />
       </button>
       {getPages().map((p, index) =>
-        p === "..." ? <span key={index} className="px-3 py-2 text-gray-400">...</span> : <button key={index} onClick={() => setPage(Number(p))} className={`px-3 py-2 rounded ${page === p ? "text-[#D6F379]" : "hover:bg-[#484848] text-white text-[14px]"}`}>{p}</button>
+        p === "..." ? <span key={index} className="px-3 py-2 text-gray-400">...</span> : <button key={index} onClick={() => setPage(Number(p))} className={`px-3 py-2 rounded ${page === p ? "text-[#D6F379]" : "hover:bg-[#484848] text-white text-[14px] cursor-pointer"}`}>{p}</button>
       )}
-      <button onClick={() => setPage(Math.min(page + 1, totalPages))} disabled={page === totalPages} className="px-3 py-2 rounded hover:bg-gray-600 text-white text-[10px]">
+      <button onClick={() => setPage(Math.min(page + 1, totalPages))} disabled={page === totalPages} className="px-3 py-2 rounded hover:bg-[#484848] text-white text-[10px] cursor-pointer">
         <FaChevronRight />
       </button>
     </div>

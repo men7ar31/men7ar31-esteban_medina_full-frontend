@@ -1,6 +1,6 @@
-// src/pages/Callback.tsx
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../components/LoadingScreen";
 
 const Callback: React.FC = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Callback: React.FC = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`, // Base64 encoding
+        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
       },
       body: new URLSearchParams({
         code,
@@ -35,13 +35,14 @@ const Callback: React.FC = () => {
 
     if (data.access_token) {
       localStorage.setItem("spotify_access_token", data.access_token);
-      navigate("/search"); // Redirige a la página principal
+      navigate("/search");
     } else {
       console.error("Error obteniendo el token:", data);
     }
   };
 
-  return <div className="text-center mt-10">Autenticando...</div>;
+  return (<LoadingScreen text="Autenticando..." />);
+  
 };
 
 export default Callback;

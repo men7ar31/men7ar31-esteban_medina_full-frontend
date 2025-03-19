@@ -3,3 +3,12 @@
 body {
   font-family: 'Montserrat', sans-serif;
 }
+@media (min-width: 834px) and (max-width: 1194px) {
+  .special {
+    flex-direction: column;
+  }
+  .arrow-ipad {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+}

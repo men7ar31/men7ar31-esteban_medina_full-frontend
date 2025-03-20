@@ -3,23 +3,28 @@ import { getSpotifyAuthUrl } from '../services/spotifyAuth';
 import logo from '../assets/Shape.svg'; 
 import arrow from '../assets/Vector 2.svg'; 
 import arrowButton from '../assets/akar-icons_arrow-right.svg'; 
+import { useOffline } from '../hooks/useOffline';
 
 const Login: React.FC = () => {
+  console.log("¿Estoy en línea?", navigator.onLine);
+
+  const isOffline = useOffline();
+
   const handleLogin = () => {
-    window.location.href = getSpotifyAuthUrl();
+    if (!isOffline) {
+      window.location.href = getSpotifyAuthUrl();
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#222222] text-white px-6 md:px-20">
-      {/* Navbar */}
+
       <header className="absolute top-0 w-full max-w-[1512px] h-[87px] flex items-center justify-start px-8 md:px-[80px] py-[24px]">
         <img src={logo} alt="Logo" className="w-[133px] h-[24px]" />
       </header>
 
-      {/* Sección principal */}
       <div className="flex flex-col lg:flex-row items-left gap-10 md:gap-[100px] w-full max-w-[1240px]">
 
-        {/* Flecha */}
         <div className="flex-1  arrow-ipad flex items-center justify-center">
           <img 
             src={arrow} 
@@ -28,7 +33,6 @@ const Login: React.FC = () => {
           />
         </div>
 
-        {/* Contenedor de textos */}
         <div className="flex-1 flex flex-col justify-left space-y-6 md:space-y-[50px] h-full">
           <h1 className="font-montserrat font-bold text-3xl sm:text-4xl md:text-[64px] leading-[100%] tracking-normal max-w-[597px]">
             Disfruta de la <span className="text-[#D6F379]">mejor música</span>
@@ -37,14 +41,15 @@ const Login: React.FC = () => {
             Accede a tu cuenta para guardar tus álbumes favoritos.
           </p>
 
-          {/* Botón de login */}
-          <button
-            onClick={handleLogin}
-            className="mt-4 md:mt-[30px] flex items-center text-white gap-4 md:gap-6 cursor-pointer"
-          >
-            <span className="font-semibold text-[16px]">Log in con Spotify</span>
-            <img src={arrowButton} alt="Arrow" className="w-[24px]" />
-          </button>
+          {!isOffline && (
+            <button
+              onClick={handleLogin}
+              className="mt-4 md:mt-[30px] flex items-center text-white gap-4 md:gap-6 cursor-pointer"
+            >
+              <span className="font-semibold text-[16px]">Log in con Spotify</span>
+              <img src={arrowButton} alt="Arrow" className="w-[24px]" />
+            </button>
+          )}
         </div>
 
       </div>

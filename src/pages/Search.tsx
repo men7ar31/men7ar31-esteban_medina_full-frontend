@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/Shape.svg";
 import { FaChevronLeft, FaChevronRight} from "react-icons/fa";
 import Navbar from "../components/Navbar";
+
 
 interface Artist {
   id: string;
@@ -16,6 +16,7 @@ const Search: React.FC = () => {
   const [results, setResults] = useState<Artist[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalResults, setTotalResults] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,11 +41,29 @@ const Search: React.FC = () => {
           },
         }
       );
-      const data = await response.json();
-      setResults(data.artists?.items || []);
-      setTotalResults(data.artists?.total || 0);
+
+      if (response.status === 404) {
+        setError("No se encontraron resultados para tu búsqueda.");
+        setResults([]);
+        setTotalResults(0);
+        return;
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.artists?.items.length === 0) {
+          setError("No se encontraron artistas con ese nombre.");
+        } else {
+          setResults(data.artists?.items || []);
+          setTotalResults(data.artists?.total || 0);
+        }
+      } else {
+        throw new Error("Error al obtener datos de la API de Spotify.");
+      }
+
     } catch (error) {
       console.error("Error fetching artists:", error);
+      setError("Hubo un problema al obtener los artistas. Intenta nuevamente.");
     }
   };
 
@@ -63,7 +82,7 @@ const Search: React.FC = () => {
         <div className="flex items-center bg-white rounded-full px-4 py-2 mt-6 w-full max-w-[600px]">
           <input
             type="text"
-            placeholder="Nirvana"
+            placeholder="Busca tu artista"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex-1 text-black outline-none px-2"
@@ -78,6 +97,7 @@ const Search: React.FC = () => {
             Search
           </button>
         </div>
+        {error && <p className="error-message">{error}</p>}
       </main>
 
       <section className="w-full max-w-[1240px] mt-12 px-4 md:px-20 lg:px-[80px] relative">
@@ -93,14 +113,12 @@ const Search: React.FC = () => {
                   onClick={() => navigate(`/artist/${artist.id}`)}
                   className="p-4 rounded-lg bg-[#222222] relative group overflow-hidden transition-all duration-300 hover:bg-[#D6F379] hover:rounded-[12px]"
                 >
-                  <img
-                    src={
-                      artist.images?.[0]?.url ||
-                      "https://via.placeholder.com/200"
-                    }
-                    alt={artist.name}
+                 <img
+                   src={artist.images?.[0]?.url ?? "https://via.placeholder.com/200"}
+                    alt={artist.name || "Artista sin nombre"}
                     className="w-full h-[241px] object-cover rounded-[12px] transition-all duration-300"
                   />
+
                 <h3 className=" font-semibold text-[36px] leading-[100%] text-white group-hover:text-black mt-6">
                      {artist.name}
                 </h3>

@@ -31,8 +31,7 @@ const Callback: React.FC = () => {
     });
 
     const data = await response.json();
-    console.log("Token response:", data);
-
+   
     if (data.access_token) {
       localStorage.setItem("spotify_access_token", data.access_token);
       navigate("/search");
@@ -42,7 +41,7 @@ const Callback: React.FC = () => {
   };
 
   return (<LoadingScreen text="Autenticando..." />);
-  
+
 };
 
 export default Callback;

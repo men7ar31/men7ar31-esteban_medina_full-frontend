@@ -67,8 +67,6 @@ const MyAlbums: React.FC = () => {
             </p>
         </main>
 
-
-      {/* Álbumes */}
       {loading ? (
         <LoadingScreen text="Cargando..." />
       ) : albums.length === 0 ? (

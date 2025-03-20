@@ -22,8 +22,8 @@ const Navbar: React.FC = () => {
   }, [darkMode]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Borra el token de sesión
-    navigate("/"); // Redirige al usuario a la pantalla de login
+    localStorage.removeItem("token"); 
+    navigate("/"); 
   };
 
   const linkClass = (path: string) =>
@@ -31,7 +31,6 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="w-full max-w-[1512px] bg-[#222222] text-white">
-      {/* Navbar para móviles */}
       <div className="md:hidden flex items-center justify-between p-6 h-[60px]">
         <img src={logoMovil} alt="Logo" className="w-[24px] h-[24px]" />
         <nav className="flex items-center space-x-4">
@@ -47,7 +46,6 @@ const Navbar: React.FC = () => {
         </nav>
       </div>
 
-      {/* Navbar para pantallas grandes */}
       <div className="hidden md:flex items-center justify-between px-[80px] py-[24px] h-[87px]">
         <img src={logo} alt="Logo" className="w-[133px] h-[24px]" />
         <nav className="flex space-x-6">

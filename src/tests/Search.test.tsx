@@ -18,7 +18,7 @@ describe("Search Component", () => {
   });
 
   beforeEach(() => {
-    jest.clearAllMocks(); // Limpiar mocks entre pruebas
+    jest.clearAllMocks(); 
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () =>

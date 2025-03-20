@@ -94,8 +94,8 @@ npm run deploy
 
 ## 🌐 Despliegue
 
-El proyecto ha sido desplegado en **Vercel** o **Netlify**.  
-URL de la demo: [🔗 Próximamente](#)
+El proyecto ha sido desplegado en **Vercel** .  
+URL de la demo: [🔗 https://men7ar31-esteban-medina-full-frontend.vercel.app/](https://men7ar31-esteban-medina-full-frontend.vercel.app/)
 
 ## 👤 Contacto
 

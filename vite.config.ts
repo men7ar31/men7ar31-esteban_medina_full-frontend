@@ -13,5 +13,6 @@ export default defineConfig({
   },
   preview: {
     port: 4173, // Asegura que el preview de Vite use un puerto distinto
-  }
+  },
+  
 })
